@@ -1,0 +1,28 @@
+{
+  "name": "@ryst/reddit-gql",
+  "version": "0.1.0",
+  "description": "Reddit GraphQL client",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Amqx/reddit-gql.git"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "lint": "biome check --write",
+    "smoke": "bun scripts/smoke.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.15",
+    "@types/bun": "^1.4.3",
+    "typescript": "~6.0.3",
+    "ultracite": "8.0.1"
+  },
+  "packageManager": "bun@1.4.3"
+}
