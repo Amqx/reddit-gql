@@ -30,6 +30,8 @@ export type MediaAsset = {
     status?: string | null;
     url?: string | null;
     width?: number | null;
+    xlarge?: MediaSource | null;
+    xxlarge?: MediaSource | null;
     xxxlarge?: MediaSource | null;
 };
 
@@ -111,6 +113,9 @@ export type PostMediaData = {
     } | null;
     still?: {
         source?: MediaSource | null;
+        xlarge?: MediaSource | null;
+        xxlarge?: MediaSource | null;
+        xxxlarge?: MediaSource | null;
     } | null;
     streaming?: {
         dimensions?: {

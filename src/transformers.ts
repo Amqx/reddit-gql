@@ -140,6 +140,18 @@ export function transformFlair(data?: FlairData | null): Array<Flair> {
 
 // media
 
+type Previews = {
+    xlarge?: { url: string } | null;
+    xxlarge?: { url: string } | null;
+    xxxlarge?: { url: string } | null;
+};
+
+// The largest resized preview (up to 1080px wide), for display in place of
+// the full resolution original.
+function previewUrl(previews?: Previews | null): string | undefined {
+    return previews?.xxxlarge?.url ?? previews?.xxlarge?.url ?? previews?.xlarge?.url;
+}
+
 function transformAsset(asset: MediaAsset): PostMedia | null {
     const url = asset.url ?? asset.xxxlarge?.url;
 
@@ -159,6 +171,7 @@ function transformAsset(asset: MediaAsset): PostMedia | null {
         height: asset.height ?? 0,
         id: asset.id,
         provider: type === "video" ? "reddit" : undefined,
+        thumbnail: type === "image" ? previewUrl(asset) : undefined,
         type,
         url,
         width: asset.width ?? 0,
@@ -178,7 +191,7 @@ function transformMeta(content?: Content | null): PostMediaMeta {
 const redGifsRegex = /redgifs\.com\/ifr\/(\w+)/;
 
 function transformVideo(post: PostData, media: PostMediaData): PostMedia | undefined {
-    const thumbnail = media.still?.source?.url ?? post.thumbnail?.url;
+    const thumbnail = previewUrl(media.still) ?? media.still?.source?.url ?? post.thumbnail?.url;
 
     if (media.streaming?.hlsUrl) {
         const url = new URL(media.streaming.hlsUrl);
@@ -262,6 +275,7 @@ function transformImages(post: PostData): Array<PostMedia> | undefined {
         return [
             {
                 height: still.dimensions?.height ?? 0,
+                thumbnail: previewUrl(post.media?.still),
                 type: "image",
                 url: still.url,
                 width: still.dimensions?.width ?? 0,
