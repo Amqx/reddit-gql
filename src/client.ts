@@ -1158,21 +1158,7 @@ export class Reddit {
     };
 
     readonly inbox = {
-        markAllRead: async (): Promise<void> => {
-            await this.mutate("markAllNotificationsRead", {
-                types: ["NOTIFICATIONS"],
-            });
-        },
-
-        markRead: async ({ id }: Pick<Notification, "group" | "id">): Promise<void> => {
-            await this.mutate("markNotificationRead", {
-                notificationId: id,
-            });
-        },
-
-        notifications: async ({
-            after,
-        }: Paging = {}): Promise<Page<"notifications", Notification>> => {
+        list: async ({ after }: Paging = {}): Promise<Page<"notifications", Notification>> => {
             const data = await this.transport.gql<{
                 notificationInbox?: {
                     elements?: Connection<NotificationData>;
@@ -1190,6 +1176,17 @@ export class Reddit {
                 cursor: cursor(connection),
                 notifications: nodes(connection).map(transformNotification),
             };
+        },
+        markAllRead: async (): Promise<void> => {
+            await this.mutate("markAllNotificationsRead", {
+                types: ["NOTIFICATIONS"],
+            });
+        },
+
+        markRead: async ({ id }: Pick<Notification, "group" | "id">): Promise<void> => {
+            await this.mutate("markNotificationRead", {
+                notificationId: id,
+            });
         },
 
         unread: async (): Promise<number> => {

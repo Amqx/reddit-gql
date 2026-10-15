@@ -85,7 +85,7 @@ backend, so only probe those with nonexistent ids.
 | `users.get` | `ProfileDetailsByName` + `SearchPeople` | The account id, karma and follow settings come from an exact-name match in `SearchPeople`. |
 | `users.me` | `GetAccount` | Six `include*` booleans are required. Gives the username, then calls `users.get`. |
 | `search.posts` / `communities` / `users` | `SearchPosts` / `SearchCommunities` / `SearchPeople` | `query` (`subreddit:<name>` restricts posts to a community), `afterCursor`, `pageSize`, `filters` (`time_range`), `productSurface` |
-| `inbox.notifications` | `GetInboxNotificationFeed` | `after`, `pageSize` |
+| `inbox.list` | `GetInboxNotificationFeed` | `after`, `pageSize` |
 | `inbox.unread` | `BadgeCount` | none |
 
 ### Mutations
