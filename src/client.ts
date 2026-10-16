@@ -664,8 +664,8 @@ export class Reddit {
                 content: {
                     markdown: body,
                 },
-                parentId,
-                postId,
+                // Reddit rejects the input unless exactly one of these is set
+                ...(parentId ? { parentId } : { postId }),
             });
 
             if (!result.commentInfo) {
